@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Carrera del 19 · Copa Prowork 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #0a1a0e;
+    --green-dark: #0d2215;
+    --green-mid: #11301a;
+    --green-card: #122618;
+    --green-border: #1e3d22;
+    --green-light: #2a5c34;
+    --gold: #c9a84c;
+    --gold-light: #e8d080;
+    --gold-dim: #7a5f20;
+    --text-primary: #eee8d5;
+    --text-secondary: #a8b89a;
+    --text-muted: #5a7060;
+    --up-color: #4caf72;
+    --down-color: #e05555;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Barlow', sans-serif; background: var(--green-deep); color: var(--text-primary); min-height: 100vh; }
+
+  /* HEADER */
+  .site-header { background: var(--green-dark); border-bottom: 1px solid var(--green-border); padding: 0 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 0; }
+  .header-logo { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 900; color: var(--gold); line-height: 1.1; }
+  .header-logo span { display: block; font-size: 9px; font-family: 'Barlow Condensed', sans-serif; font-weight: 400; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; margin-top: 1px; }
+  .last-update { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; text-align: right; }
+  .last-update strong { color: var(--text-secondary); display: block; font-size: 11px; }
+  .tabs { display: flex; margin-top: 10px; }
+  .tab-btn { flex: 1; padding: 10px 4px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; display: flex; align-items: center; justify-content: center; gap: 5px; transition: color 0.2s; }
+  .tab-btn:hover { color: var(--text-secondary); }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* SCREENS */
+  .screen { display: none; padding: 16px; }
+  .screen.active { display: block; }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--green-border); border-radius: 10px; overflow: hidden; margin-bottom: 18px; }
+  .stat-box { background: var(--green-card); padding: 12px 8px; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--gold); font-weight: 700; }
+  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 2.5px; color: var(--text-muted); text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--green-border); margin-bottom: 12px; }
+  .last-fecha-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
+  .last-fecha-label em { font-style: italic; font-size: 12px; color: var(--text-secondary); letter-spacing: 0; text-transform: none; margin-left: 8px; }
+
+  /* CARDS */
+  .card { background: var(--green-card); border: 1px solid var(--green-border); border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+  .card-header { padding: 12px 14px 8px; }
+  .card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: 0.5px; }
+  .card-sub { font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 2px; }
+
+  /* RESULT ROWS */
+  .col-headers { display: flex; padding: 5px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1.5px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--green-border); gap: 8px; }
+  .ch-pos { width: 32px; } .ch-name { flex: 1; } .ch-torneo { width: 72px; text-align: center; } .ch-pts { width: 50px; text-align: right; }
+  .result-row { display: flex; align-items: center; padding: 9px 14px; border-top: 1px solid var(--green-border); gap: 8px; }
+  .result-row.dnp { opacity: 0.45; }
+  .pos-num { width: 32px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; color: var(--gold); font-weight: 600; }
+  .player-name-cell { flex: 1; font-size: 14px; color: var(--text-primary); }
+  .torneo-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; padding: 3px 6px; border-radius: 4px; letter-spacing: 0.5px; font-weight: 600; width: 72px; text-align: center; line-height: 1.3; flex-shrink: 0; }
+  .badge-princ { background: #1a3d1a; color: #6dcc6d; border: 1px solid #2d5a2d; }
+  .badge-sec { background: #1a2d3d; color: #6daed4; border: 1px solid #2d455a; }
+  .badge-major { background: #3d2a08; color: #e8a030; border: 1px solid #6a4010; }
+  .pts-cell { width: 50px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; color: var(--gold); font-weight: 600; }
+  .dnp-cell { width: 50px; text-align: right; color: var(--text-muted); font-size: 13px; }
+
+  /* LEADERBOARD */
+  .lb-col-headers { display: flex; padding: 6px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1.5px; color: var(--text-muted); text-transform: uppercase; gap: 4px; }
+  .lbch-rank { width: 24px; } .lbch-mv { width: 38px; } .lbch-name { flex: 1; } .lbch-n { width: 28px; text-align: center; } .lbch-total { width: 52px; text-align: right; } .lbch-gap { width: 44px; text-align: right; }
+  .lb-row { display: flex; align-items: center; padding: 11px 14px; border-top: 1px solid var(--green-border); gap: 4px; }
+  .lb-rank { width: 24px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; color: var(--text-muted); }
+  .lb-rank.first { color: var(--gold); font-size: 15px; font-weight: 700; }
+  .lb-mv { width: 38px; display: flex; align-items: center; }
+  .mv-up { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; color: var(--up-color); font-weight: 600; }
+  .mv-down { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; color: var(--down-color); font-weight: 600; }
+  .mv-same { font-size: 11px; color: var(--text-muted); }
+  .lb-info { flex: 1; }
+  .lb-name-text { font-size: 14px; color: var(--text-primary); }
+  .lb-sub-text { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .lb-n { width: 28px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: var(--text-muted); }
+  .lb-total { width: 52px; text-align: right; font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold); font-weight: 700; }
+  .lb-gap { width: 44px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: var(--text-muted); }
+
+  /* FECHAS */
+  .fecha-card { background: var(--green-card); border: 1px solid var(--green-border); border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
+  .fecha-card-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--green-border); }
+  .fecha-card-date { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-primary); }
+
+  /* ADMIN LOCK SCREEN */
+  .lock-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 24px 40px; text-align: center; }
+  .lock-icon { font-size: 40px; margin-bottom: 20px; }
+  .lock-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); margin-bottom: 8px; }
+  .lock-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+  .lock-input { width: 100%; max-width: 280px; background: #091510; border: 1px solid var(--green-border); border-radius: 8px; padding: 12px 16px; color: var(--text-primary); font-size: 16px; text-align: center; letter-spacing: 4px; font-family: 'Barlow Condensed', sans-serif; margin-bottom: 12px; }
+  .lock-input:focus { outline: none; border-color: var(--gold-dim); }
+  .lock-error { font-size: 12px; color: var(--down-color); margin-bottom: 12px; min-height: 18px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
+  .btn-unlock { background: #1a3d1a; border: 1px solid #2d5a2d; color: #6dcc6d; padding: 12px 32px; border-radius: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; width: 100%; max-width: 280px; }
+  .btn-unlock:hover { background: #1e4a1e; }
+  .btn-lock-out { background: none; border: 1px solid var(--green-border); color: var(--text-muted); padding: 7px 14px; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; float: right; margin-bottom: 16px; }
+  .btn-lock-out:hover { color: var(--down-color); border-color: var(--down-color); }
+
+  /* ADMIN CONTENT */
+  .admin-content { display: none; }
+  .admin-block { margin-bottom: 24px; }
+  .admin-block-title { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--green-border); }
+  .form-row { margin-bottom: 10px; }
+  .form-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 5px; }
+  .form-input, .form-select { width: 100%; background: #091510; border: 1px solid var(--green-border); border-radius: 6px; padding: 9px 11px; color: var(--text-primary); font-size: 13px; font-family: 'Barlow', sans-serif; transition: border-color 0.2s; appearance: auto; }
+  .form-input:focus, .form-select:focus { outline: none; border-color: var(--gold-dim); }
+  .form-select option { background: #0d2215; color: var(--text-primary); }
+  .players-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .player-chip { display: flex; align-items: center; background: #091510; border: 1px solid var(--green-border); border-radius: 6px; padding: 8px 12px; gap: 8px; }
+  .player-chip-name { flex: 1; font-size: 13px; color: var(--text-primary); }
+  .btn-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 15px; padding: 0 2px; transition: color 0.2s; }
+  .btn-remove:hover { color: var(--down-color); }
+  .results-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .result-entry { background: #091510; border: 1px solid var(--green-border); border-radius: 8px; padding: 10px 12px; }
+  .result-entry-name { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
+  .result-entry-fields { display: flex; gap: 8px; align-items: center; }
+  .field-small { max-width: 90px; flex-shrink: 0; }
+  .btn-primary { width: 100%; background: #1a3d1a; border: 1px solid #2d5a2d; color: #6dcc6d; padding: 11px 16px; border-radius: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .btn-primary:hover { background: #1e4a1e; }
+  .btn-danger { width: 100%; background: #3a1a1a; border: 1px solid #5a2d2d; color: #cc6060; padding: 11px 16px; border-radius: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .btn-danger:hover { background: #4a1a1a; }
+  .btn-export { width: 100%; background: #3d2a08; border: 1px solid #6a4010; color: #e8a030; padding: 11px 16px; border-radius: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .btn-export:hover { background: #4a3010; }
+  .saved-msg { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: var(--up-color); text-align: center; padding: 8px; letter-spacing: 1px; display: none; }
+  .empty-state { text-align: center; padding: 24px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; color: var(--text-muted); letter-spacing: 1px; }
+  .divider { height: 1px; background: var(--green-border); margin: 16px 0; }
+  .export-box { background: #091510; border: 1px solid var(--green-border); border-radius: 8px; padding: 14px; }
+  .export-box p { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6; }
+  .change-pwd-row { display: flex; gap: 8px; margin-top: 8px; }
+  .change-pwd-row .form-input { flex: 1; }
+  .btn-small { background: #1a2d3d; border: 1px solid #2d455a; color: #6daed4; padding: 9px 14px; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+  .btn-small:hover { background: #1e3a4a; }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="header-top">
+    <div class="header-logo">
+      La Carrera del 19
+      <span>Copa Prowork · Cuarta Edición 2025</span>
+    </div>
+    <div class="last-update">
+      <strong id="last-update-date">—</strong>
+      Última act.
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('ranking')">🏆 Ranking</button>
+    <button class="tab-btn" onclick="showTab('fechas')">📅 Fechas</button>
+    <button class="tab-btn" onclick="showTab('admin')">⚙️ Admin</button>
+  </div>
+</div>
+
+<!-- ══ RANKING ══ -->
+<div id="screen-ranking" class="screen active">
+  <div class="stats-row" id="stats-row"></div>
+  <div class="last-fecha-label" id="last-fecha-label"></div>
+  <div id="last-fecha-card"></div>
+  <div class="section-label">Clasificación general · La Carrera del 19 — Leaderboard</div>
+  <div class="card">
+    <div class="lb-col-headers">
+      <span class="lbch-rank">#</span>
+      <span class="lbch-mv">Mov</span>
+      <span class="lbch-name">Jugador</span>
+      <span class="lbch-n">N°</span>
+      <span class="lbch-total">Total</span>
+      <span class="lbch-gap">Gap</span>
+    </div>
+    <div id="leaderboard"></div>
+  </div>
+</div>
+
+<!-- ══ FECHAS ══ -->
+<div id="screen-fechas" class="screen">
+  <div class="section-label" style="margin-bottom:14px;">Historial de fechas</div>
+  <div id="fechas-list"></div>
+</div>
+
+<!-- ══ ADMIN ══ -->
+<div id="screen-admin" class="screen">
+
+  <!-- LOCK SCREEN -->
+  <div class="lock-screen" id="lock-screen">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">Acceso Admin</div>
+    <div class="lock-sub">Ingresá la clave para acceder al panel de administración</div>
+    <input class="lock-input" type="password" id="pwd-input" placeholder="• • • • • •" maxlength="20" />
+    <div class="lock-error" id="lock-error"></div>
+    <button class="btn-unlock" onclick="tryUnlock()">Ingresar</button>
+  </div>
+
+  <!-- ADMIN PANEL (oculto hasta desbloquear) -->
+  <div class="admin-content" id="admin-content">
+
+    <button class="btn-lock-out" onclick="lockAdmin()">🔒 Cerrar sesión</button>
+
+    <div class="admin-block">
+      <div class="admin-block-title">Jugadores registrados</div>
+      <div class="players-list" id="players-list"></div>
+      <div class="form-row">
+        <input class="form-input" id="new-player-name" placeholder="Nombre del jugador" />
+      </div>
+      <button class="btn-primary" id="btn-add-player" onclick="addPlayer()">+ Agregar jugador</button>
+    </div>
+
+    <div class="admin-block">
+      <div class="admin-block-title">Cargar nueva fecha</div>
+      <div class="form-row">
+        <label class="form-label">Fecha del sábado</label>
+        <input class="form-input" type="date" id="new-fecha-date" />
+      </div>
+      <div class="admin-block-title" style="margin-top:14px;">Resultado por jugador</div>
+      <div class="results-grid" id="results-grid"></div>
+      <div class="saved-msg" id="saved-msg">✓ Fecha guardada correctamente</div>
+      <button class="btn-primary" id="btn-save-date" onclick="saveDate()">Guardar fecha</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="admin-block">
+      <div class="admin-block-title">Exportar para GitHub</div>
+      <div class="export-box">
+        <p>Exporta el HTML completo con los datos incrustados. Subí ese archivo a tu repositorio de GitHub y activá GitHub Pages para tener una URL pública.</p>
+        <button class="btn-export" id="btn-export" onclick="exportHTML()">⬇ Exportar HTML con datos</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="admin-block">
+      <div class="admin-block-title">Cambiar clave de admin</div>
+      <div class="change-pwd-row">
+        <input class="form-input" type="password" id="new-pwd" placeholder="Nueva clave" maxlength="20" />
+        <button class="btn-small" onclick="changePassword()">Cambiar</button>
+      </div>
+      <div class="saved-msg" id="pwd-saved-msg" style="text-align:left;padding-left:0;">✓ Clave actualizada</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="admin-block">
+      <button class="btn-danger" onclick="if(confirm('¿Borrar TODOS los datos del torneo? Esto no se puede deshacer.')){clearAll();}">
+        ⚠ Borrar todos los datos
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TABLA DE PUNTOS
+// ══════════════════════════════════════════
+// Tabla de puntos PRINCIPAL según PDF (posiciones 1-60)
+// MAJOR = PRINCIPAL × 3
+// SECUNDARIO = PRINCIPAL × 0.5
+const POINTS_TABLE = [
+  500,   // 1
+  300,   // 2
+  190,   // 3
+  135,   // 4
+  110,   // 5
+  90,    // 6
+  85,    // 7
+  80,    // 8
+  75,    // 9
+  70,    // 10
+  65,    // 11
+  60,    // 12
+  57,    // 13
+  55,    // 14
+  53,    // 15
+  51,    // 16
+  49,    // 17
+  47,    // 18
+  45,    // 19
+  43,    // 20
+  41,    // 21
+  39,    // 22
+  37,    // 23
+  35,    // 24
+  33,    // 25
+  31,    // 26
+  30,    // 27
+  29,    // 28
+  28,    // 29
+  27,    // 30
+  26,    // 31
+  25,    // 32
+  24,    // 33
+  23,    // 34
+  22,    // 35
+  21,    // 36
+  20,    // 37
+  19,    // 38
+  18,    // 39
+  17,    // 40
+  16,    // 41
+  15,    // 42
+  14,    // 43
+  13,    // 44
+  12,    // 45
+  11,    // 46
+  10,    // 47
+  9,     // 48
+  8,     // 49
+  7,     // 50
+  6.5,   // 51
+  6,     // 52
+  5.5,   // 53
+  4.5,   // 54
+  3.5,   // 55
+  2.5,   // 56
+  2.25,  // 57
+  1.75,  // 58
+  1.5,   // 59
+  1.25   // 60
+];
+
+const DEFAULT_PASSWORD = '1919';
+
+// ══════════════════════════════════════════
+// ESTADO — los datos del torneo van aquí
+// Al exportar, este objeto se reemplaza con los datos reales
+// ══════════════════════════════════════════
+let STATE = {"adminPassword": "1919", "lastUpdate": null, "players": [], "dates": []};
+
+// ══════════════════════════════════════════
+// PERSISTENCIA
+// ══════════════════════════════════════════
+function loadState() {
+  try {
+    const raw = localStorage.getItem('carrera19v3');
+    if (raw) {
+      const saved = JSON.parse(raw);
+      // Merge: localStorage overrides embedded STATE
+      STATE = Object.assign({}, STATE, saved);
+    }
+  } catch(e) {}
+}
+
+function saveStateLS() {
+  try { localStorage.setItem('carrera19v3', JSON.stringify(STATE)); } catch(e) {}
+}
+
+// ══════════════════════════════════════════
+// ADMIN AUTH
+// ══════════════════════════════════════════
+let adminUnlocked = false;
+
+function tryUnlock() {
+  const val = document.getElementById('pwd-input').value;
+  const correctPwd = STATE.adminPassword || DEFAULT_PASSWORD;
+  if (val === correctPwd) {
+    adminUnlocked = true;
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'block';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('lock-error').textContent = '';
+    renderAdmin();
+  } else {
+    document.getElementById('lock-error').textContent = 'Clave incorrecta';
+    document.getElementById('pwd-input').value = '';
+  }
+}
+
+function lockAdmin() {
+  adminUnlocked = false;
+  document.getElementById('lock-screen').style.display = 'flex';
+  document.getElementById('admin-content').style.display = 'none';
+}
+
+function changePassword() {
+  const newPwd = document.getElementById('new-pwd').value.trim();
+  if (!newPwd) { alert('Ingresá una nueva clave'); return; }
+  STATE.adminPassword = newPwd;
+  saveStateLS();
+  document.getElementById('new-pwd').value = '';
+  const msg = document.getElementById('pwd-saved-msg');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 2000);
+}
+
+// ══════════════════════════════════════════
+// PUNTOS
+// ══════════════════════════════════════════
+function getPoints(pos, tipo) {
+  if (!pos || pos <= 0 || pos > 60) return 0;
+  const base = POINTS_TABLE[pos - 1];
+  if (tipo === 'major') return Math.round(base * 3 * 100) / 100;
+  if (tipo === 'secundario') return Math.round(base * 0.5 * 100) / 100;
+  return base;
+}
+
+// ══════════════════════════════════════════
+// LEADERBOARD
+// ══════════════════════════════════════════
+function buildLeaderboard() {
+  const totals = {}, counts = {};
+  STATE.players.forEach(p => { totals[p] = 0; counts[p] = 0; });
+  STATE.dates.forEach(fecha => {
+    if (!fecha.results) return;
+    fecha.results.forEach(r => {
+      if (r.pos > 0) {
+        totals[r.player] = (totals[r.player] || 0) + getPoints(r.pos, r.tipo);
+        counts[r.player] = (counts[r.player] || 0) + 1;
+      }
+    });
+  });
+  return STATE.players
+    .map(p => ({ name: p, total: Math.round((totals[p] || 0) * 100) / 100, n: counts[p] || 0 }))
+    .sort((a, b) => b.total - a.total);
+}
+
+function buildLeaderboardAt(dateIndex) {
+  const totals = {};
+  STATE.players.forEach(p => { totals[p] = 0; });
+  STATE.dates.slice(0, dateIndex + 1).forEach(fecha => {
+    if (!fecha.results) return;
+    fecha.results.forEach(r => {
+      if (r.pos > 0) totals[r.player] = (totals[r.player] || 0) + getPoints(r.pos, r.tipo);
+    });
+  });
+  return STATE.players
+    .map(p => ({ name: p, total: Math.round((totals[p] || 0) * 100) / 100 }))
+    .sort((a, b) => b.total - a.total)
+    .map((p, i) => ({ ...p, rank: i + 1 }));
+}
+
+function getRankingMovement() {
+  const n = STATE.dates.length;
+  if (n < 2) return {};
+  const prev = buildLeaderboardAt(n - 2);
+  const prevMap = {};
+  prev.forEach(p => { prevMap[p.name] = p.rank; });
+  const curr = buildLeaderboard();
+  const mv = {};
+  curr.forEach((p, i) => {
+    const currRank = i + 1;
+    const prevRank = prevMap[p.name];
+    if (prevRank === undefined) mv[p.name] = { type: 'new' };
+    else if (prevRank > currRank) mv[p.name] = { type: 'up', delta: prevRank - currRank };
+    else if (prevRank < currRank) mv[p.name] = { type: 'down', delta: currRank - prevRank };
+    else mv[p.name] = { type: 'same' };
+  });
+  return mv;
+}
+
+// ══════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════
+function formatDate(d) {
+  if (!d) return '';
+  const [y, m, day] = d.split('-');
+  const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return `Sábado, ${parseInt(day)} de ${months[parseInt(m)-1]} de ${y}`;
+}
+
+function tipoBadge(tipo) {
+  if (tipo === 'major') return `<span class="torneo-badge badge-major">MAJOR<br>300%</span>`;
+  if (tipo === 'secundario') return `<span class="torneo-badge badge-sec">SECUND.<br>50%</span>`;
+  return `<span class="torneo-badge badge-princ">PRINC.<br>100%</span>`;
+}
+
+// ══════════════════════════════════════════
+// RENDER RANKING
+// ══════════════════════════════════════════
+function renderRanking() {
+  const lb = buildLeaderboard();
+  const totalFechas = STATE.dates.length;
+  const majors = STATE.dates.filter(d => d.results && d.results.some(r => r.tipo === 'major')).length;
+
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-box"><div class="stat-num">${STATE.players.length}</div><div class="stat-label">Jugadores</div></div>
+    <div class="stat-box"><div class="stat-num">${totalFechas}</div><div class="stat-label">Fechas</div></div>
+    <div class="stat-box"><div class="stat-num">${majors}</div><div class="stat-label">C/ Major</div></div>
+  `;
+
+  if (STATE.lastUpdate) {
+    document.getElementById('last-update-date').textContent = formatDate(STATE.lastUpdate).replace('Sábado, ', '');
+  }
+
+  const lastFecha = STATE.dates[STATE.dates.length - 1];
+  const llabel = document.getElementById('last-fecha-label');
+  const lcard = document.getElementById('last-fecha-card');
+
+  if (!lastFecha) {
+    llabel.innerHTML = '';
+    lcard.innerHTML = '<div class="card"><div class="empty-state">Sin fechas cargadas aún</div></div>';
+  } else {
+    llabel.innerHTML = `ÚLTIMA FECHA <em>${formatDate(lastFecha.date)}</em>`;
+    const sorted = [...(lastFecha.results || [])].filter(r => r.pos > 0).sort((a,b) => a.pos - b.pos);
+    const dnp = (lastFecha.results || []).filter(r => r.pos === 0);
+    let rows = '';
+    sorted.forEach(r => {
+      const pts = getPoints(r.pos, r.tipo);
+      rows += `<div class="result-row">
+        <span class="pos-num">${r.pos}°</span>
+        <span class="player-name-cell">${r.player}</span>
+        ${tipoBadge(r.tipo)}
+        <span class="pts-cell">${pts}</span>
+      </div>`;
+    });
+    dnp.forEach(r => {
+      rows += `<div class="result-row dnp">
+        <span class="pos-num" style="color:var(--text-muted)">DNP</span>
+        <span class="player-name-cell">${r.player}</span>
+        <span class="torneo-badge" style="width:72px;"></span>
+        <span class="dnp-cell">—</span>
+      </div>`;
+    });
+    lcard.innerHTML = `<div class="card">
+      <div class="card-header">
+        <div class="card-title">Resultados — ${formatDate(lastFecha.date)}</div>
+        <div class="card-sub">Posición individual por jugador · Categoría según hándicap</div>
+      </div>
+      <div class="col-headers">
+        <span class="ch-pos">Pos</span>
+        <span class="ch-name">Jugador</span>
+        <span class="ch-torneo">Torneo</span>
+        <span class="ch-pts">Pts</span>
+      </div>
+      ${rows}
+    </div>`;
+  }
+
+  const mv = getRankingMovement();
+  const leaderTotal = lb[0]?.total || 0;
+  const lbEl = document.getElementById('leaderboard');
+  if (lb.length === 0) {
+    lbEl.innerHTML = '<div class="empty-state">Sin jugadores registrados</div>';
+    return;
+  }
+  lbEl.innerHTML = lb.map((p, i) => {
+    const rankClass = i === 0 ? 'lb-rank first' : 'lb-rank';
+    const gap = i === 0 ? '—' : `-${Math.round((leaderTotal - p.total) * 100) / 100}`;
+    const movement = mv[p.name];
+    let mvHtml = '<span class="mv-same">—</span>';
+    if (movement) {
+      if (movement.type === 'up') mvHtml = `<span class="mv-up">▲${movement.delta}</span>`;
+      else if (movement.type === 'down') mvHtml = `<span class="mv-down">▼${movement.delta}</span>`;
+      else if (movement.type === 'new') mvHtml = `<span class="mv-up" style="font-size:9px;letter-spacing:1px;">NEW</span>`;
+    }
+    return `<div class="lb-row">
+      <span class="${rankClass}">${i+1}</span>
+      <span class="lb-mv">${mvHtml}</span>
+      <div class="lb-info">
+        <div class="lb-name-text">${p.name}</div>
+        <div class="lb-sub-text">${p.n}/${totalFechas} fechas</div>
+      </div>
+      <span class="lb-n">${p.n}</span>
+      <span class="lb-total">${p.total}</span>
+      <span class="lb-gap">${gap}</span>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// RENDER FECHAS
+// ══════════════════════════════════════════
+function renderFechas() {
+  const el = document.getElementById('fechas-list');
+  if (STATE.dates.length === 0) {
+    el.innerHTML = '<div class="empty-state">Sin fechas cargadas aún</div>';
+    return;
+  }
+  el.innerHTML = [...STATE.dates].reverse().map(fecha => {
+    const sorted = [...(fecha.results || [])].filter(r => r.pos > 0).sort((a,b) => a.pos - b.pos);
+    const dnp = (fecha.results || []).filter(r => r.pos === 0);
+    let rows = '';
+    sorted.forEach(r => {
+      const pts = getPoints(r.pos, r.tipo);
+      rows += `<div class="result-row" style="padding:9px 14px;">
+        <span class="pos-num">${r.pos}°</span>
+        <span class="player-name-cell">${r.player}</span>
+        ${tipoBadge(r.tipo)}
+        <span class="pts-cell">+${pts}</span>
+      </div>`;
+    });
+    dnp.forEach(r => {
+      rows += `<div class="result-row dnp" style="padding:9px 14px;">
+        <span class="pos-num" style="color:var(--text-muted)">DNP</span>
+        <span class="player-name-cell">${r.player}</span>
+        <span class="torneo-badge" style="width:72px;"></span>
+        <span class="dnp-cell">—</span>
+      </div>`;
+    });
+    return `<div class="fecha-card">
+      <div class="fecha-card-header">
+        <span class="fecha-card-date">${formatDate(fecha.date)}</span>
+      </div>
+      ${rows}
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// RENDER ADMIN
+// ══════════════════════════════════════════
+function renderAdmin() {
+  if (!adminUnlocked) return;
+
+  const pl = document.getElementById('players-list');
+  pl.innerHTML = STATE.players.length === 0
+    ? '<div class="empty-state" style="padding:10px 0;">Sin jugadores agregados</div>'
+    : STATE.players.map((p, i) => `
+        <div class="player-chip">
+          <span class="player-chip-name">${p}</span>
+          <button class="btn-remove" onclick="removePlayer(${i})">✕</button>
+        </div>`).join('');
+
+  const grid = document.getElementById('results-grid');
+  if (STATE.players.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="padding:10px 0;">Agregá jugadores primero</div>';
+    return;
+  }
+  grid.innerHTML = STATE.players.map(p => {
+    const safeP = p.replace(/"/g, '&quot;');
+    return `<div class="result-entry">
+      <div class="result-entry-name">${p}</div>
+      <div class="result-entry-fields">
+        <input class="form-input field-small" type="number" min="0" max="200"
+          placeholder="Pos (0=DNP)"
+          id="pos_${safeP}" />
+        <select class="form-select" id="tipo_${safeP}">
+          <option value="principal">Principal (100%)</option>
+          <option value="secundario">Secundario (50%)</option>
+          <option value="major">Major (300%)</option>
+        </select>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// ADMIN ACTIONS
+// ══════════════════════════════════════════
+function addPlayer() {
+  const inp = document.getElementById('new-player-name');
+  const name = inp.value.trim();
+  if (!name) return;
+  if (STATE.players.includes(name)) { alert('Ese jugador ya existe'); return; }
+  STATE.players.push(name);
+  inp.value = '';
+  saveStateLS();
+  renderAdmin();
+}
+
+function removePlayer(i) {
+  if (!confirm(`¿Eliminar a ${STATE.players[i]}?`)) return;
+  STATE.players.splice(i, 1);
+  saveStateLS();
+  renderAdmin();
+}
+
+function saveDate() {
+  const dateVal = document.getElementById('new-fecha-date').value;
+  if (!dateVal) { alert('Seleccioná una fecha'); return; }
+  if (STATE.players.length === 0) { alert('No hay jugadores cargados'); return; }
+
+  const results = [];
+  STATE.players.forEach(p => {
+    const safeP = p.replace(/"/g, '&quot;');
+    const posEl = document.getElementById('pos_' + safeP);
+    const tipoEl = document.getElementById('tipo_' + safeP);
+    const pos = parseInt(posEl ? posEl.value : '0') || 0;
+    const tipo = tipoEl ? tipoEl.value : 'principal';
+    results.push({ player: p, pos, tipo });
+  });
+
+  STATE.dates.push({ date: dateVal, results });
+  STATE.lastUpdate = dateVal;
+  saveStateLS();
+
+  document.getElementById('new-fecha-date').value = '';
+  const msg = document.getElementById('saved-msg');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 2500);
+
+  renderAdmin();
+  renderRanking();
+}
+
+function clearAll() {
+  const pwd = STATE.adminPassword || DEFAULT_PASSWORD;
+  STATE = { players: [], dates: [], lastUpdate: null, adminPassword: pwd };
+  saveStateLS();
+  render();
+  renderAdmin();
+}
+
+// ══════════════════════════════════════════
+// EXPORTAR HTML
+// ══════════════════════════════════════════
+function exportHTML() {
+  const source = document.documentElement.outerHTML;
+  const stateStr = JSON.stringify(STATE);
+  const exported = source.replace(
+    /let STATE = \{.*?\};/s,
+    `let STATE = ${stateStr};`
+  );
+  const blob = new Blob([exported], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'carrera-del-19.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════
+function showTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const tabs = ['ranking','fechas','admin'];
+  const idx = tabs.indexOf(tab);
+  if (idx >= 0) document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  document.getElementById('screen-' + tab).classList.add('active');
+  if (tab === 'ranking') renderRanking();
+  if (tab === 'fechas') renderFechas();
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+function render() {
+  renderRanking();
+  renderFechas();
+}
+
+loadState();
+render();
+
+document.getElementById('pwd-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryUnlock();
+});
+document.getElementById('new-player-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addPlayer();
+});
+</script>
+</body>
+</html>
