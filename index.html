@@ -161,6 +161,15 @@
 </head>
 <body>
 
+<!-- Banner notificaciones -->
+<div id="notif-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1a4a2a;border-top:2px solid #c9a84c;padding:14px 16px;text-align:center;">
+  <div style="color:#eee8d5;font-family:'Barlow',sans-serif;font-size:14px;margin-bottom:10px;">🔔 Activá las notificaciones para recibir avisos del torneo</div>
+  <div style="display:flex;gap:10px;justify-content:center;">
+    <button onclick="activarNotificaciones()" style="background:#c9a84c;color:#1a2e1a;border:none;border-radius:6px;padding:8px 20px;font-family:'Barlow',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">Activar</button>
+    <button onclick="cerrarBanner()" style="background:transparent;color:#8aaa8a;border:1px solid #3a5a3a;border-radius:6px;padding:8px 16px;font-family:'Barlow',sans-serif;font-size:14px;cursor:pointer;">Ahora no</button>
+  </div>
+</div>
+
 <div class="site-header">
   <div class="header-top">
     <div class="header-logo">
@@ -1169,7 +1178,26 @@ async function sendPushNotification() {
 }
 
 if ('serviceWorker' in navigator && 'Notification' in window) {
-  window.addEventListener('load', initFirebaseMessaging);
+  window.addEventListener('load', () => {
+    // Solo iniciar automáticamente si ya tiene permiso
+    if (Notification.permission === 'granted') {
+      initFirebaseMessaging();
+    } else if (Notification.permission === 'default') {
+      // Mostrar banner después de 2 segundos
+      setTimeout(() => {
+        document.getElementById('notif-banner').style.display = 'block';
+      }, 2000);
+    }
+  });
+}
+
+async function activarNotificaciones() {
+  cerrarBanner();
+  await initFirebaseMessaging();
+}
+
+function cerrarBanner() {
+  document.getElementById('notif-banner').style.display = 'none';
 }
 </script>
 </body>
