@@ -1126,12 +1126,10 @@ async function initFirebaseMessaging() {
       body: JSON.stringify({ token })
     });
 
-    // Escuchar notificaciones con la app abierta
+    // Cuando la app está abierta, el service worker ya maneja la notificación
+    // No mostramos una segunda notificación aquí para evitar duplicados
     messaging.onMessage(payload => {
-      const { title, body } = payload.notification;
-      if (Notification.permission === 'granted') {
-        new Notification(title, { body, icon: '/icon-192.png' });
-      }
+      console.log('Notificación recibida en foreground:', payload.notification?.title);
     });
 
   } catch(e) {
