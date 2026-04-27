@@ -177,6 +177,16 @@
   .change-pwd-row .form-input { flex: 1; }
   .btn-small { background: #1a2d3d; border: 1px solid #2d455a; color: #6daed4; padding: 9px 14px; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
   .btn-small:hover { background: #1e3a4a; }
+
+  .tt-card{background:var(--green-card);border:1px solid var(--green-border);border-radius:10px;margin-bottom:12px;overflow:hidden;}
+  .tt-header{background:#091510;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--green-border);}
+  .tt-group-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;}
+  .tt-time{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);}
+  .tt-player-row{display:flex;align-items:center;padding:9px 14px;border-top:1px solid var(--green-border);gap:10px;}
+  .tt-player-row.invitado{opacity:0.5;}
+  .tt-hcp-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);color:var(--gold);flex-shrink:0;min-width:36px;text-align:center;}
+  .tt-player-name{flex:1;font-size:14px;color:var(--text-primary);}
+  .tt-rank{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-muted);}
 </style>
 </head>
 <body>
@@ -216,6 +226,7 @@
   <div class="menu-item" id="menu-ranking" onclick="showTab('ranking')"><span class="menu-item-icon">🏆</span> Ranking</div>
   <div class="menu-item" id="menu-fechas" onclick="showTab('fechas')"><span class="menu-item-icon">📅</span> Fechas</div>
   <div class="menu-item" id="menu-playoff" onclick="showTab('playoff')"><span class="menu-item-icon">🏅</span> Play Off</div>
+  <div class="menu-item" id="menu-teetimes" onclick="showTab('teetimes')"><span class="menu-item-icon">⏱</span> Tee Times</div>
   <div class="menu-item" id="menu-campeones" onclick="showTab('campeones')"><span class="menu-item-icon">👑</span> Campeones</div>
   <div class="menu-item" id="menu-reglamento" onclick="showTab('reglamento')"><span class="menu-item-icon">📋</span> Reglamento</div>
   <div class="menu-item active" id="menu-admin" onclick="showTab('admin')"><span class="menu-item-icon">⚙️</span> Admin</div>
@@ -368,11 +379,17 @@
 <!-- ══ FECHAS ══ -->
 <div id="screen-fechas" class="screen">
   <div class="section-label" style="margin-bottom:14px;">Historial de fechas</div>
-  <div id="fechas-list"><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(5)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 6</span><span class="fecha-card-date">Sábado, 18 de Abr de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-5">▼</span></div></div><div class="fecha-body" id="fecha-body-5"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+150</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">13°</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+28.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">27°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+30</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">33°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+24</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">49°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+8</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(4)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 5</span><span class="fecha-card-date">Sábado, 11 de Abr de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-4">▼</span></div></div><div class="fecha-body" id="fecha-body-4"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">1°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+250</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">3°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+95</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">5°</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+110</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">11°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+32.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">12°</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+30</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">14°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+55</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">17°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+24.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">17°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+24.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">20°</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+21.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">21°</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+20.5</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(3)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 4</span><span class="fecha-card-date">Sábado, 4 de Abr de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-3">▼</span></div></div><div class="fecha-body" id="fecha-body-3"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">3°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+95</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">5°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+55</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">12°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+30</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">13°</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+28.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">14°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+27.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">15°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+26.5</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(2)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 3</span><span class="fecha-card-date">Sábado, 28 de Mar de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-2">▼</span></div></div><div class="fecha-body" id="fecha-body-2"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">16°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+51</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">19°</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+45</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">25°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+33</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">30°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+27</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(1)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 2</span><span class="fecha-card-date">Sábado, 21 de Mar de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-1">▼</span></div></div><div class="fecha-body" id="fecha-body-1"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">1°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+500</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">1°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+500</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">6°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+90</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">6°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+90</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">10°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+70</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">16°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+51</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(0)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 1</span><span class="fecha-card-date">Sábado, 7 de Mar de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-0">▼</span></div></div><div class="fecha-body" id="fecha-body-0"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">5°</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+110</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">6°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+90</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">9°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+75</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">11°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+65</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">21°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+41</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">23°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+37</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">25°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+33</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">33°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+24</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div></div>
+  <div id="fechas-list"><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(6)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 7</span><span class="fecha-card-date">Sábado, 25 de Abr de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-6">▼</span></div></div><div class="fecha-body" id="fecha-body-6"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+135</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(5)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 6</span><span class="fecha-card-date">Sábado, 18 de Abr de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-5">▼</span></div></div><div class="fecha-body" id="fecha-body-5"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+150</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">13°</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+28.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">27°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+30</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">33°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+24</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">49°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+8</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(4)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 5</span><span class="fecha-card-date">Sábado, 11 de Abr de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-4">▼</span></div></div><div class="fecha-body" id="fecha-body-4"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">1°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+250</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">3°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+95</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">5°</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+110</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">11°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+32.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">12°</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+30</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">14°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+55</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">17°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+24.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">17°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+24.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">20°</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+21.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">21°</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+20.5</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(3)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 4</span><span class="fecha-card-date">Sábado, 4 de Abr de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-3">▼</span></div></div><div class="fecha-body" id="fecha-body-3"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">3°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+95</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">4°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+67.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">5°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+55</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">12°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+30</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">13°</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+28.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">14°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+27.5</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">15°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-sec">SECUND.<br>50%</span><span class="pts-cell">+26.5</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(2)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 3</span><span class="fecha-card-date">Sábado, 28 de Mar de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-2">▼</span></div></div><div class="fecha-body" id="fecha-body-2"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">16°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+51</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">19°</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+45</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">25°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+33</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">30°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+27</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(1)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 2</span><span class="fecha-card-date">Sábado, 21 de Mar de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-1">▼</span></div></div><div class="fecha-body" id="fecha-body-1"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">1°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+500</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">1°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+500</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">6°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+90</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">6°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+90</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">7°</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+85</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">10°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+70</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">16°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+51</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div><div class="fecha-card"><div class="fecha-card-header" onclick="toggleFecha(0)"><div class="fecha-card-left"><span class="fecha-num-badge">Fecha 1</span><span class="fecha-card-date">Sábado, 7 de Mar de 2026</span></div><div style="display:flex;align-items:center;gap:6px;"><span class="fecha-chevron" id="fecha-chev-0">▼</span></div></div><div class="fecha-body" id="fecha-body-0"><div class="result-row" style="padding:9px 14px;"><span class="pos-num">2°</span><span class="player-name-cell">Fernando Melen Araoz</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+300</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">5°</span><span class="player-name-cell">Horacio Nofal</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+110</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">6°</span><span class="player-name-cell">Zenon Santillan</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+90</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">8°</span><span class="player-name-cell">Francisco Landivar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+80</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">9°</span><span class="player-name-cell">Diego Bejar</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+75</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">11°</span><span class="player-name-cell">Carlos Peralta</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+65</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">21°</span><span class="player-name-cell">Carlos Arevalo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+41</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">23°</span><span class="player-name-cell">Tomas Martinez Pardo</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+37</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">25°</span><span class="player-name-cell">Mariano Fagalde</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+33</span></div><div class="result-row" style="padding:9px 14px;"><span class="pos-num">33°</span><span class="player-name-cell">Ruben Farias</span><span class="torneo-badge badge-princ">PRINC.<br>100%</span><span class="pts-cell">+24</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Javier Cristobal</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Adriano Bourguignon</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Pedro Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div><div class="result-row dnp" style="padding:9px 14px;"><span class="pos-num" style="color:var(--text-muted)">DNP</span><span class="player-name-cell">Raul Cabrera</span><span class="torneo-badge" style="width:72px;"></span><span class="dnp-cell">—</span></div></div></div></div>
 </div>
 
 
 <!-- ══ PLAY OFF ══ -->
+
+<!-- TEE TIMES -->
+<div id="screen-teetimes" class="screen">
+  <div id="teetimes-content" style="padding:16px;"></div>
+</div>
+
 <div id="screen-playoff" class="screen">
   <div class="section-label" style="margin-bottom:14px;">Play Off · 36 Hoyos · Par 71</div>
   <div id="playoff-leaderboard-card"></div>
@@ -1053,8 +1070,38 @@
 
     <div class="divider"></div>
 
+    <div class="admin-block">
+      <div class="admin-block-title">Estado del Torneo</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;" id="playoff-status-label">⏸ Fase regular en curso</div>
+      <button class="btn-primary" id="btn-enable-playoff" onclick="togglePlayoffMode()">🏁 Habilitar Play-off</button>
+    </div>
 
-    <div class="admin-block" id="playoff-admin-block">
+    <div class="divider"></div>
+
+    <div class="admin-block" id="teetimes-admin-block" style="display:none;">
+      <div class="admin-block-title">⏱ Tee Times — Configurar horarios</div>
+      <div class="form-row">
+        <label class="form-label">Ronda</label>
+        <select class="form-select" id="tt-ronda-select">
+          <option value="1">Ronda 1 — Country</option>
+          <option value="2">Ronda 2 — Alpa</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Hora primera salida</label>
+        <input class="form-input" type="time" id="tt-first-time" value="08:00" />
+      </div>
+      <div class="form-row">
+        <label class="form-label">Invitados (uno por línea)</label>
+        <textarea class="form-input" id="tt-invitados" rows="4" placeholder="Nombre Invitado 1&#10;Nombre Invitado 2" style="resize:vertical;font-size:13px;"></textarea>
+      </div>
+      <div class="saved-msg" id="tt-saved-msg">✓ Tee Times guardados</div>
+      <button class="btn-primary" onclick="saveTeeTimesConfig()">Guardar Tee Times</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="playoff-admin-block">
       <div class="admin-block-title">Play Off — Cargar ronda</div>
       <div class="form-row">
         <label class="form-label">Ronda</label>
@@ -1573,6 +1620,7 @@ function renderFechas() {
 // ══════════════════════════════════════════
 function renderAdmin() {
   if (!adminUnlocked) return;
+  setTimeout(updatePlayoffStatusUI, 50);
 
   const pl = document.getElementById('players-list');
   pl.innerHTML = STATE.players.length === 0
@@ -1717,7 +1765,7 @@ function exportHTML() {
 // ══════════════════════════════════════════
 const PAR_CANCHA = 71;
 
-const PLAYOFF_HCP_ADJUST = [-10, -8, -7, -6, -5, -4, -4, -4, -3, -3, -3, -2, -2, -2, -1, -1, -1, 0];
+const PLAYOFF_HCP_ADJUST = [-5, -4, -3, -2, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function getPlayoffHcp(playerName) {
   const lb = buildLeaderboard();
@@ -1765,19 +1813,32 @@ function buildPlayoffLbHTML(standings, po) {
 
   // Movement vs previous round
   function getMovement(p, roundIdx) {
-    if (roundIdx === 0 || po.rounds.length < 2) return null;
-    // Build standings after previous round only
-    var prevStandings = standings.map(function(x) {
+    var prevStandings;
+    if (roundIdx === 0 && po.rounds.length >= 1) {
+      // Ronda 1 ya cargada: comparar contra ranking de fase regular (sin ventajas, solo puntos acumulados)
+      var regularLb = buildLeaderboard();
+      prevStandings = regularLb.map(function(x, i) { return { name: x.name, rank: i + 1 }; });
+      var prevPos = prevStandings.findIndex(function(x){ return x.name === p.name; });
+      var currPos = standings.findIndex(function(x){ return x.name === p.name; });
+      if (prevPos < 0 || currPos < 0) return null;
+      var delta = prevPos - currPos;
+      if (delta > 0) return {type: 'up', delta: delta};
+      if (delta < 0) return {type: 'down', delta: Math.abs(delta)};
+      return {type: 'same'};
+    }
+    if (po.rounds.length < 2) return null;
+    // Ronda 2: comparar contra posición después de Ronda 1
+    prevStandings = standings.map(function(x) {
       var prevRounds = x.roundsVsPar.slice(0, roundIdx);
       var prevSum = prevRounds.reduce(function(s,v){ return s + (v !== null ? v : 0); }, 0);
       return { name: x.name, score: x.hcpAdj + prevSum };
     }).sort(function(a,b){ return a.score - b.score; });
-    var prevPos = prevStandings.findIndex(function(x){ return x.name === p.name; });
-    var currPos = standings.findIndex(function(x){ return x.name === p.name; });
-    if (prevPos < 0 || currPos < 0) return null;
-    var delta = prevPos - currPos;
-    if (delta > 0) return {type: 'up', delta: delta};
-    if (delta < 0) return {type: 'down', delta: Math.abs(delta)};
+    var prevPos2 = prevStandings.findIndex(function(x){ return x.name === p.name; });
+    var currPos2 = standings.findIndex(function(x){ return x.name === p.name; });
+    if (prevPos2 < 0 || currPos2 < 0) return null;
+    var delta2 = prevPos2 - currPos2;
+    if (delta2 > 0) return {type: 'up', delta: delta2};
+    if (delta2 < 0) return {type: 'down', delta: Math.abs(delta2)};
     return {type: 'same'};
   }
 
@@ -1805,7 +1866,7 @@ function buildPlayoffLbHTML(standings, po) {
     }
 
     function netoCell(neto, vp) {
-      if (neto === null) return '<td style="text-align:center;color:#aaa;padding:10px 8px;">—</td>';
+      if (neto === null || neto === undefined) return '<td style="text-align:center;color:#aaa;padding:10px 8px;">—</td>';
       var s = fmtScore(vp);
       return '<td style="width:52px;padding:8px;text-align:center;vertical-align:middle;">'
         + '<div style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:700;color:#222;line-height:1.1;">' + neto + '</div>'
@@ -1846,13 +1907,48 @@ function renderPlayoff() {
   const lbCard = document.getElementById('playoff-leaderboard-card');
   const rondasEl = document.getElementById('playoff-rondas');
 
+  if (!STATE.playoffEnabled) {
+    lbCard.innerHTML = '<div class="empty-state" style="padding:30px;text-align:center;">Play Off no iniciado aún.<br><span style="font-size:11px;color:var(--text-muted);display:block;margin-top:6px;">Se habilitará al finalizar la fase regular.</span></div>';
+    rondasEl.innerHTML = '';
+    return;
+  }
   if (po.rounds.length === 0) {
-    lbCard.innerHTML = '<div class="empty-state" style="padding:30px;">Play Off no iniciado aún</div>';
+    var lb2 = buildLeaderboard();
+    var emptyRows = lb2.map(function(p, i) {
+      var hcp = PLAYOFF_HCP_ADJUST[i] !== undefined ? PLAYOFF_HCP_ADJUST[i] : 0;
+      var hcpText = hcp === 0 ? 'E' : (hcp > 0 ? '+'+hcp : ''+hcp);
+      var hcpColor = hcp < 0 ? '#cc2222' : hcp === 0 ? '#1a7a1a' : '#111';
+      var bg = i % 2 === 0 ? '#f9f9f9' : '#fff';
+      return '<tr style="border-top:1px solid #e0e0e0;background:' + bg + ';">'
+        + '<td style="padding:10px 8px 10px 14px;font-family:Barlow Condensed,sans-serif;font-size:13px;font-weight:700;color:#222;">' + (i+1) + '</td>'
+        + '<td style="width:36px;padding:10px 4px;text-align:center;"><span style="color:#888;font-size:11px;">—</span></td>'
+        + '<td style="padding:10px 8px;font-size:14px;color:#111;font-weight:500;">' + p.name + '</td>'
+        + '<td style="width:60px;padding:10px 8px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:700;color:' + hcpColor + ';">' + hcpText + '</td>'
+        + '<td style="width:52px;padding:8px;text-align:center;color:#aaa;">—</td>'
+        + '<td style="width:52px;padding:8px;text-align:center;color:#aaa;">—</td>'
+        + '</tr>';
+    }).join('');
+    lbCard.innerHTML = '<div class="card" style="background:#fff;border:1px solid #ddd;">'
+      + '<div class="card-header" style="background:#fff;border-bottom:1px solid #eee;">'
+      + '<div class="card-title" style="color:#111;">Play-off — Leaderboard</div>'
+      + '<div class="card-sub" style="color:#666;">0 de 2 rondas · Par ' + PAR_CANCHA + '</div></div>'
+      + '<div style="overflow-x:auto;">'
+      + '<table style="width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;">'
+      + '<thead><tr style="border-bottom:2px solid #ccc;">'
+      + '<th style="width:40px;padding:7px 8px 7px 14px;text-align:left;font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:1.5px;color:#333;font-weight:700;">#</th>'
+      + '<th style="width:36px;padding:7px 4px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:1.5px;color:#333;font-weight:700;">MOV</th>'
+      + '<th style="padding:7px 8px;text-align:left;font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:1.5px;color:#333;font-weight:700;">JUGADOR</th>'
+      + '<th style="width:60px;padding:7px 8px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:1.5px;color:#333;font-weight:700;">TOTAL</th>'
+      + '<th style="width:52px;padding:7px 8px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:1.5px;color:#333;font-weight:700;">R1<br><span style="font-size:8px;color:#888;font-weight:400;">Country</span></th>'
+      + '<th style="width:52px;padding:7px 14px 7px 8px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:1.5px;color:#333;font-weight:700;">R2<br><span style="font-size:8px;color:#888;font-weight:400;">Alpa</span></th>'
+      + '</tr></thead>'
+      + '<tbody>' + emptyRows + '</tbody>'
+      + '</table></div></div>';
     rondasEl.innerHTML = '';
     return;
   }
 
-  // Build standings
+    // Build standings
   // adjustedTotal = ventaja inicial + suma de (neto - par) por ronda jugada
   // Ej: ventaja -10, ronda1 neto 75 → -10 + (75-71) = -10 + 4 = -6
   const standings = STATE.players.map(name => {
@@ -1949,6 +2045,132 @@ function closeMenu() {
   document.getElementById('menu-overlay').classList.remove('open');
 }
 
+
+// ══ PLAYOFF MODE + TEE TIMES ══
+function togglePlayoffMode() {
+  STATE.playoffEnabled = !STATE.playoffEnabled;
+  saveStateLS();
+  updatePlayoffStatusUI();
+  renderPlayoff();
+}
+
+function updatePlayoffStatusUI() {
+  var enabled = STATE.playoffEnabled || false;
+  var label = document.getElementById('playoff-status-label');
+  var btn = document.getElementById('btn-enable-playoff');
+  var ttBlock = document.getElementById('teetimes-admin-block');
+  if (!label || !btn) return;
+  if (enabled) {
+    label.innerHTML = '✅ Play-off <strong>habilitado</strong>';
+    btn.textContent = 'Volver a Fase Regular';
+    btn.style.background = '#3a1a1a'; btn.style.borderColor = '#5a2d2d'; btn.style.color = '#cc6060';
+    if (ttBlock) ttBlock.style.display = 'block';
+  } else {
+    label.textContent = '⏸ Fase regular en curso';
+    btn.textContent = '🏁 Habilitar Play-off';
+    btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = '';
+    if (ttBlock) ttBlock.style.display = 'none';
+  }
+}
+
+function saveTeeTimesConfig() {
+  var rondaNum = parseInt(document.getElementById('tt-ronda-select').value) || 1;
+  var firstTime = document.getElementById('tt-first-time').value || '08:00';
+  var invRaw = document.getElementById('tt-invitados').value || '';
+  var invitados = invRaw.split('\n').map(function(s){return s.trim();}).filter(function(s){return s.length>0;});
+  if (!STATE.teetimes) STATE.teetimes = {};
+  STATE.teetimes['ronda'+rondaNum] = {firstTime:firstTime, invitados:invitados};
+  saveStateLS();
+  var msg = document.getElementById('tt-saved-msg');
+  if (msg) {msg.style.display='block'; setTimeout(function(){msg.style.display='none';},2000);}
+  renderTeeTimes();
+}
+
+function buildTeeTimes(ronda) {
+  var po = STATE.playoff || {};
+  var players; // orden: mejor primero (pos 1, pos 2, ...)
+  if (ronda === 1 || !(po.rounds && po.rounds.length > 0)) {
+    players = buildLeaderboard().map(function(p){return p.name;}); // mejor al inicio
+  } else {
+    var s2 = STATE.players.map(function(name) {
+      var hcp = getPlayoffHcp(name);
+      var sum = (po.rounds||[]).reduce(function(s,r){
+        var res = r.results.find(function(x){return x.player===name;});
+        return s + (res && res.neto!==null ? res.neto - PAR_CANCHA : 0);
+      },0);
+      return {name:name, score:hcp+sum};
+    }).sort(function(a,b){return a.score-b.score;}); // mejor (menor score) al inicio
+    players = s2.map(function(p){return p.name;});
+  }
+
+  var ttData = STATE.teetimes || {};
+  var rondaData = ttData['ronda'+ronda] || {firstTime:'08:00', invitados:[]};
+  var invitados = (rondaData.invitados||[]).slice();
+
+  // Armar array de salida: peores primero, mejores últimos
+  // Invertir para que el peor quede al inicio
+  var playersWorstFirst = players.slice().reverse();
+
+  // Agregar invitados AL PRINCIPIO (completan el primer grupo junto a los peores)
+  var invObj = invitados.map(function(n){ return {name:n, isInvitado:true}; });
+  var all = invObj.concat(playersWorstFirst.map(function(n){ return {name:n, isInvitado:false}; }));
+
+  // Si después de agregar invitados no es múltiplo de 4, agregar slots vacíos al inicio
+  while (all.length % 4 !== 0) {
+    all.unshift({name:'—', isInvitado:true});
+  }
+
+  var parts = (rondaData.firstTime||'08:00').split(':');
+  var base = parseInt(parts[0])*60 + parseInt(parts[1]);
+  var groups = [];
+  for (var i=0; i<all.length; i+=4) {
+    var mins = base + (i/4)*10;
+    var h = Math.floor(mins/60)%24, m = mins%60;
+    groups.push({
+      num: i/4+1,
+      time: (h<10?'0'+h:''+h)+':'+(m<10?'0'+m:''+m),
+      players: all.slice(i,i+4)
+    });
+  }
+  return groups;
+}
+
+function renderTeeTimes() {
+  var el = document.getElementById('teetimes-content');
+  if (!el) return;
+  if (!STATE.playoffEnabled) {
+    el.innerHTML = '<div style="padding:40px 20px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:13px;letter-spacing:1px;color:var(--text-muted);">Tee Times no disponibles aún.<br><br>Se publicarán al finalizar la fase regular.</div>';
+    return;
+  }
+  var po = STATE.playoff || {};
+  var ronda = (po.rounds && po.rounds.length>=1) ? 2 : 1;
+  var canchas = {1:'Country', 2:'Alpa'};
+  var rondaData = (STATE.teetimes||{})['ronda'+ronda] || {};
+  var lb = buildLeaderboard();
+  var lbRank = {};
+  lb.forEach(function(p,i){lbRank[p.name]=i+1;});
+  var html = '<div style="font-family:Barlow Condensed,sans-serif;font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--green-border);margin-bottom:14px;">Play-off · Ronda '+ronda+' — '+(canchas[ronda]||'')+'</div>';
+  if (!rondaData.firstTime) {
+    html += '<div style="padding:30px;text-align:center;font-size:13px;color:var(--text-muted);">Horarios pendientes de publicación</div>';
+    el.innerHTML = html; return;
+  }
+  var groups = buildTeeTimes(ronda);
+  groups.forEach(function(g) {
+    var rows = g.players.map(function(p) {
+      var hcp = p.isInvitado ? null : getPlayoffHcp(p.name);
+      var hcpLabel = p.isInvitado ? 'INV' : (hcp===0?'PAR':''+hcp);
+      var rank = p.isInvitado ? '' : (lbRank[p.name]?'#'+lbRank[p.name]:'');
+      return '<div class="tt-player-row'+(p.isInvitado?' invitado':'')+'">'
+        +'<span class="tt-hcp-badge">'+hcpLabel+'</span>'
+        +'<span class="tt-player-name">'+p.name+'</span>'
+        +'<span class="tt-rank">'+(p.isInvitado?'INVITADO':rank)+'</span>'
+        +'</div>';
+    }).join('');
+    html += '<div class="tt-card"><div class="tt-header"><span class="tt-group-num">Grupo '+g.num+'</span><span class="tt-time">'+g.time+'</span></div>'+rows+'</div>';
+  });
+  el.innerHTML = html;
+}
+
 // ══════════════════════════════════════════
 // TABS
 // ══════════════════════════════════════════
@@ -1962,6 +2184,7 @@ function showTab(tab) {
   if (tab === 'ranking') renderRanking();
   if (tab === 'fechas') renderFechas();
   if (tab === 'playoff') renderPlayoff();
+  if (tab === 'teetimes') renderTeeTimes();
 }
 // ══════════════════════════════════════════
 // INIT
