@@ -478,8 +478,8 @@
       <div style="font-family:'Barlow',sans-serif;font-size:13px;color:#e8e8d5;line-height:1.65;"><strong style="color:var(--gold);">10.</strong> <strong>Formato:</strong> Se jugará una fecha por cada sábado en las canchas donde el Jockey Club programe un torneo oficial en modalidad Medal Play.</div>
       <div style="font-family:'Barlow',sans-serif;font-size:13px;color:#e8e8d5;line-height:1.65;"><strong style="color:var(--gold);">11.</strong> <strong>Modalidades No Válidas:</strong> Los torneos en modalidades diferentes a Medal Play no serán válidos para la acumulación de puntos.</div>
       <div style="font-family:'Barlow',sans-serif;font-size:13px;color:#e8e8d5;line-height:1.65;"><strong style="color:var(--gold);">12.</strong> <strong>Torneos Simultáneos:</strong> Si se programan dos o más torneos oficiales simultáneos, ambos serán válidos. Se designará uno como "Principal" (100%) y el otro como "Menor" (50%).</div>
-      <div style="background:#091510;border-radius:8px;padding:12px 14px;border:1px solid var(--green-border);">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">13. Categorías y Pesos</div>
+      <div style="font-family:'Barlow',sans-serif;font-size:14px;color:#e8e8d5;line-height:1.65;"><strong style="color:var(--gold);">13.</strong> <strong>Categorías y Pesos:</strong></div>
+      <div style="background:#091510;border-radius:8px;padding:12px 14px;border:1px solid var(--green-border);margin-top:8px;">
         <div style="font-family:'Barlow',sans-serif;font-size:13px;color:#e8e8d5;line-height:1.8;">🥇 Torneo Principal (con sponsor): <strong style="color:var(--gold);">100%</strong> de los puntos<br>🥈 Torneo Menor (Medal Play sin sponsor): <strong style="color:var(--gold);">50%</strong> de los puntos<br>⭐ Torneo Major (último de la fase regular): <strong style="color:var(--gold);">150%</strong> de los puntos</div>
       </div>
       <div style="font-family:'Barlow',sans-serif;font-size:13px;color:#e8e8d5;line-height:1.65;"><strong style="color:var(--gold);">14.</strong> <strong>Flexibilidad:</strong> La alternativa de torneos permite a los jugadores elegir dónde jugar sin afectar su participación en la competencia.</div>
@@ -1513,6 +1513,18 @@ function renderRanking() {
     lbEl.innerHTML = '<div class="empty-state">Sin jugadores registrados</div>';
     return;
   }
+  // Assign tied positions for regular season leaderboard
+  const lbPositions = [];
+  let lbJ = 0;
+  while (lbJ < lb.length) {
+    let lbK = lbJ;
+    while (lbK < lb.length && lb[lbK].total === lb[lbJ].total) lbK++;
+    const lbCount = lbK - lbJ;
+    const lbLabel = lbCount > 1 ? 'T' + (lbJ + 1) : '' + (lbJ + 1);
+    for (let lbX = lbJ; lbX < lbK; lbX++) lbPositions.push(lbLabel);
+    lbJ = lbK;
+  }
+
   lbEl.innerHTML = lb.map((p, i) => {
     const rankClass = i === 0 ? 'lb-rank first' : 'lb-rank';
     const gap = i === 0 ? '—' : `-${Math.round((leaderTotal - p.total) * 100) / 100}`;
@@ -1524,7 +1536,7 @@ function renderRanking() {
       else if (movement.type === 'new') mvHtml = `<span class="mv-up" style="font-size:9px;letter-spacing:1px;">NEW</span>`;
     }
     const row = `<div class="lb-row">
-      <span class="${rankClass}">${i+1}</span>
+      <span class="${rankClass}">${lbPositions[i]}</span>
       <span class="lb-mv">${mvHtml}</span>
       <div class="lb-info">
         <div class="lb-name-text">${p.name}</div>
@@ -1914,13 +1926,29 @@ function renderPlayoff() {
   }
   if (po.rounds.length === 0) {
     var lb2 = buildLeaderboard();
+
+    // Assign tied positions based on hcp adjustment
+    var hcpList = lb2.map(function(p, i) {
+      return PLAYOFF_HCP_ADJUST[i] !== undefined ? PLAYOFF_HCP_ADJUST[i] : 0;
+    });
+    var posLabels = [];
+    var j = 0;
+    while (j < hcpList.length) {
+      var k = j;
+      while (k < hcpList.length && hcpList[k] === hcpList[j]) k++;
+      var count = k - j;
+      var label = count > 1 ? 'T' + (j + 1) : '' + (j + 1);
+      for (var x = j; x < k; x++) posLabels.push(label);
+      j = k;
+    }
+
     var emptyRows = lb2.map(function(p, i) {
-      var hcp = PLAYOFF_HCP_ADJUST[i] !== undefined ? PLAYOFF_HCP_ADJUST[i] : 0;
+      var hcp = hcpList[i];
       var hcpText = hcp === 0 ? 'E' : (hcp > 0 ? '+'+hcp : ''+hcp);
       var hcpColor = hcp < 0 ? '#cc2222' : hcp === 0 ? '#1a7a1a' : '#111';
       var bg = i % 2 === 0 ? '#f9f9f9' : '#fff';
       return '<tr style="border-top:1px solid #e0e0e0;background:' + bg + ';">'
-        + '<td style="padding:10px 8px 10px 14px;font-family:Barlow Condensed,sans-serif;font-size:13px;font-weight:700;color:#222;">' + (i+1) + '</td>'
+        + '<td style="padding:10px 8px 10px 14px;font-family:Barlow Condensed,sans-serif;font-size:13px;font-weight:700;color:#222;">' + posLabels[i] + '</td>'
         + '<td style="width:36px;padding:10px 4px;text-align:center;"><span style="color:#888;font-size:11px;">—</span></td>'
         + '<td style="padding:10px 8px;font-size:14px;color:#111;font-weight:500;">' + p.name + '</td>'
         + '<td style="width:60px;padding:10px 8px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:700;color:' + hcpColor + ';">' + hcpText + '</td>'
